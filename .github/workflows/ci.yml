@@ -23,14 +23,10 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Poetry
-      run: |
-        pip install poetry    
+        python-version: ${{ matrix.python-version }}   
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        poetry install
     - name: Test with pytest
       run: |
         pytest
