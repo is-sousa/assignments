@@ -23,19 +23,14 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python -
-        export PATH="$HOME/.local/bin:$PATH"
-        poetry --version    
+        python-version: ${{ matrix.python-version }}   
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        poetry install
+        pip install pytest
     - name: Test with pytest
       run: |
-        poetry run pytest
+        run pytest
     - name: Run pylint
       run: |
         pylint life_expectancy
