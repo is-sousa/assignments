@@ -22,5 +22,11 @@ fail_under = 80
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.pylint."messages control"]
+disable = [
+   "missing-module-docstring", "C0116"
+   # Add any other checks you want to disable here
+]
+
 [tool.setuptools]
 packages = ["life_expectancy"]
