@@ -6,7 +6,7 @@ def load_data():
     data = pd.read_csv('life_expectancy/data/eu_life_expectancy_raw.tsv', sep='\t')
     return data
 
-def clean_data(data):
+def clean_data(data, country):
     data[['unit', 'sex', 'age', 'region']] = data[r'unit,sex,age,geo\time'].str.split(
         ',', expand=True)
 
@@ -23,23 +23,20 @@ def clean_data(data):
 
     cleaned_data['value'] = cleaned_data['value'].astype(float)
 
-    return cleaned_data
-
-def save_data(cleaned_data, country):
     portugal_data = cleaned_data[cleaned_data['region'] == country]
 
     portugal_data = portugal_data.dropna(subset=['value'])
 
+    return portugal_data
+
+def save_data(portugal_data):
     portugal_data.to_csv('life_expectancy/data/pt_life_expectancy.csv', index=False)
 
 def main():
-    parser = argparse.ArgumentParser(description='Life expectancy data for a specific country.')
-    parser.add_argument('--country', default='PT')
-    args = parser.parse_args()
-
     data = load_data()
-    cleaned_data = clean_data(data)
-    save_data(cleaned_data, args.country)
+    cleaned_data = clean_data(data, 'PT')
+    save_data(cleaned_data)
+    return clean_data
 
 if __name__ == '__main__':  # pragma: no cover
     main()
