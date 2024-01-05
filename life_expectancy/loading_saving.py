@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
 import numpy as np
-from life_expectancy.cleaning import load_data, clean_data
+from life_expectancy.cleaning import load_data, clean_data, Region
 
 def create_input_fixture():
     data = load_data()
@@ -13,15 +13,15 @@ def create_input_fixture():
     return sample_data
 
 def create_output_fixture(sample_data):
-    clean_data = clean_data(sample_data, 'PT')
+    cleaned_data = clean_data(sample_data, Region['PT'])
 
-    clean_data.to_csv('life_expectancy/tests/fixtures/eu_life_expectancy_expected.csv', index=False)
+    cleaned_data.to_csv('life_expectancy/tests/fixtures/eu_life_expectancy_expected.csv', index=False)
 
-    return clean_data
+    return cleaned_data
 
 def main():
-    create_input_fixture = create_input_fixture()
-    create_output_fixture = create_output_fixture(create_input_fixture)
+    input_fixture = create_input_fixture()
+    output_fixture = create_output_fixture(input_fixture)
     print("Cleaned DataFrame:")
     print(create_output_fixture)
 
